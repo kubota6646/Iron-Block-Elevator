@@ -1,0 +1,16 @@
+# Iron Block Elevator Configuration
+
+# Enable or disable the plugin functionality
+enabled: true
+
+# Vertical speed when moving up (jumping on iron block)
+upward-speed: 0.5
+
+# Vertical speed when moving down (sneaking on iron block)
+downward-speed: 0.5
+
+# Maximum height the elevator can go
+max-height: 256
+
+# Enable debug messages
+debug: false
