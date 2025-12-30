@@ -56,10 +56,12 @@ public class ElevatorListener implements Listener {
             return;
         }
 
-        // Check if player is trying to use the elevator (jumping or sneaking)
-        boolean tryingToUse = player.getVelocity().getY() > 0.1 || player.isSneaking();
+        // Determine what action the player is trying to do
+        boolean isJumping = player.getVelocity().getY() > 0.1;
+        boolean isSneaking = player.isSneaking();
         
-        if (!tryingToUse) {
+        // Check if player is trying to use the elevator
+        if (!isJumping && !isSneaking) {
             return; // Player is just standing on the block, not trying to use it
         }
 
@@ -92,7 +94,7 @@ public class ElevatorListener implements Listener {
         }
 
         // Check if player is jumping (moving upward)
-        if (player.getVelocity().getY() > 0.1) {
+        if (isJumping) {
             // Find the next elevator block above
             Block targetBlock = findNextElevatorBlockAbove(blockBelow, plugin.getElevatorConfig().getMaxHeight());
             
@@ -125,7 +127,7 @@ public class ElevatorListener implements Listener {
             }
         }
         // Check if player is sneaking (moving downward)
-        else if (player.isSneaking()) {
+        else if (isSneaking) {
             // Find the next elevator block below
             Block targetBlock = findNextElevatorBlockBelow(blockBelow);
             
