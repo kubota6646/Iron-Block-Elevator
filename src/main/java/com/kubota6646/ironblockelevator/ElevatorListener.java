@@ -33,12 +33,28 @@ public class ElevatorListener implements Listener {
             return;
         }
 
+        // Check GriefPrevention permissions
+        if (!plugin.getGriefPreventionIntegration().canUseElevator(player, blockBelow.getLocation())) {
+            if (plugin.getElevatorConfig().isDebug()) {
+                plugin.getLogger().info(player.getName() + " cannot use elevator due to GriefPrevention protection");
+            }
+            return;
+        }
+
         // Check if player is jumping (moving upward)
         if (player.getVelocity().getY() > 0) {
             // Find the next iron block above
             Block targetBlock = findNextIronBlockAbove(blockBelow, plugin.getElevatorConfig().getMaxHeight());
             
             if (targetBlock != null) {
+                // Check GriefPrevention permissions for the target location
+                if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
+                    if (plugin.getElevatorConfig().isDebug()) {
+                        plugin.getLogger().info(player.getName() + " cannot use elevator - target location protected by GriefPrevention");
+                    }
+                    return;
+                }
+                
                 // Calculate the distance to the target block
                 double distance = targetBlock.getY() - player.getLocation().getY();
                 
@@ -59,6 +75,14 @@ public class ElevatorListener implements Listener {
             Block targetBlock = findNextIronBlockBelow(blockBelow);
             
             if (targetBlock != null) {
+                // Check GriefPrevention permissions for the target location
+                if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
+                    if (plugin.getElevatorConfig().isDebug()) {
+                        plugin.getLogger().info(player.getName() + " cannot use elevator - target location protected by GriefPrevention");
+                    }
+                    return;
+                }
+                
                 // Calculate the distance to the target block
                 double distance = player.getLocation().getY() - targetBlock.getY();
                 

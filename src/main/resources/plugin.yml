@@ -5,6 +5,7 @@ api-version: 1.19
 author: kubota6646
 description: 鉄ブロックエレベーターを使用可能にするプラグイン
 website: https://github.com/kubota6646/Iron-Block-Elevator
+softdepend: [GriefPrevention]
 
 commands:
   ironblockelevator:
