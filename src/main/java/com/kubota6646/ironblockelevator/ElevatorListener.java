@@ -36,7 +36,7 @@ public class ElevatorListener implements Listener {
         // Check GriefPrevention permissions
         if (!plugin.getGriefPreventionIntegration().canUseElevator(player, blockBelow.getLocation())) {
             if (plugin.getElevatorConfig().isDebug()) {
-                plugin.getLogger().info(player.getName() + " cannot use elevator due to GriefPrevention protection");
+                plugin.getLogger().info(plugin.getMessages().getDebugCannotUseGriefPrevention(player.getName()));
             }
             return;
         }
@@ -50,7 +50,7 @@ public class ElevatorListener implements Listener {
                 // Check GriefPrevention permissions for the target location
                 if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
                     if (plugin.getElevatorConfig().isDebug()) {
-                        plugin.getLogger().info(player.getName() + " cannot use elevator - target location protected by GriefPrevention");
+                        plugin.getLogger().info(plugin.getMessages().getDebugTargetProtected(player.getName()));
                     }
                     return;
                 }
@@ -65,7 +65,7 @@ public class ElevatorListener implements Listener {
                 player.setVelocity(velocity);
                 
                 if (plugin.getElevatorConfig().isDebug()) {
-                    plugin.getLogger().info(player.getName() + " is moving up on iron block elevator");
+                    plugin.getLogger().info(plugin.getMessages().getDebugMovingUp(player.getName()));
                 }
             }
         }
@@ -78,7 +78,7 @@ public class ElevatorListener implements Listener {
                 // Check GriefPrevention permissions for the target location
                 if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
                     if (plugin.getElevatorConfig().isDebug()) {
-                        plugin.getLogger().info(player.getName() + " cannot use elevator - target location protected by GriefPrevention");
+                        plugin.getLogger().info(plugin.getMessages().getDebugTargetProtected(player.getName()));
                     }
                     return;
                 }
@@ -93,7 +93,7 @@ public class ElevatorListener implements Listener {
                 player.setVelocity(velocity);
                 
                 if (plugin.getElevatorConfig().isDebug()) {
-                    plugin.getLogger().info(player.getName() + " is moving down on iron block elevator");
+                    plugin.getLogger().info(plugin.getMessages().getDebugMovingDown(player.getName()));
                 }
             }
         }

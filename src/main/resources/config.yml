@@ -1,16 +1,16 @@
-# Iron Block Elevator Configuration
+# 鉄ブロックエレベーター 設定ファイル
 
-# Enable or disable the plugin functionality
+# プラグイン機能の有効/無効
 enabled: true
 
-# Vertical speed when moving up (jumping on iron block)
+# 上昇時の垂直速度（鉄ブロックの上でジャンプした時）
 upward-speed: 0.5
 
-# Vertical speed when moving down (sneaking on iron block)
+# 下降時の垂直速度（鉄ブロックの上でスニークした時）
 downward-speed: 0.5
 
-# Maximum height the elevator can go
+# エレベーターが移動できる最大高度
 max-height: 256
 
-# Enable debug messages
+# デバッグメッセージの有効化
 debug: false

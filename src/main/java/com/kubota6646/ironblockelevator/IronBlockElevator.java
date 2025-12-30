@@ -7,6 +7,7 @@ public class IronBlockElevator extends JavaPlugin {
     private static IronBlockElevator instance;
     private ElevatorConfig elevatorConfig;
     private GriefPreventionIntegration griefPreventionIntegration;
+    private Messages messages;
 
     @Override
     public void onEnable() {
@@ -14,6 +15,9 @@ public class IronBlockElevator extends JavaPlugin {
         
         // Save default config if not exists
         saveDefaultConfig();
+        
+        // Load messages
+        messages = new Messages(this);
         
         // Load configuration
         elevatorConfig = new ElevatorConfig(this);
@@ -27,12 +31,12 @@ public class IronBlockElevator extends JavaPlugin {
         // Register command
         getCommand("ironblockelevator").setExecutor(new ElevatorCommand(this));
         
-        getLogger().info("IronBlockElevator has been enabled!");
+        getLogger().info(messages.getPluginEnabled());
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("IronBlockElevator has been disabled!");
+        getLogger().info(messages.getPluginDisabled());
     }
 
     public static IronBlockElevator getInstance() {
@@ -47,8 +51,13 @@ public class IronBlockElevator extends JavaPlugin {
         return griefPreventionIntegration;
     }
 
+    public Messages getMessages() {
+        return messages;
+    }
+
     public void reloadElevatorConfig() {
         reloadConfig();
         elevatorConfig = new ElevatorConfig(this);
+        messages.reload();
     }
 }

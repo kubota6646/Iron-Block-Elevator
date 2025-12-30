@@ -1,0 +1,31 @@
+# Iron Block Elevator メッセージ設定
+
+# プラグイン有効化メッセージ
+plugin-enabled: "IronBlockElevator が有効になりました！"
+
+# プラグイン無効化メッセージ
+plugin-disabled: "IronBlockElevator が無効になりました！"
+
+# GriefPrevention連携有効化メッセージ
+griefprevention-enabled: "GriefPrevention 連携が有効になりました"
+
+# コマンドメッセージ
+command:
+  header: "&6=== Iron Block Elevator ==="
+  version: "&eバージョン: &f{version}"
+  author: "&e作者: &f{author}"
+  reload-usage: "&e使い方: &f/{label} reload &eで設定を再読み込み"
+  no-permission: "&c設定を再読み込みする権限がありません！"
+  reload-success: "&a設定を正常に再読み込みしました！"
+  unknown-command: "&c不明なサブコマンドです。/{label} でヘルプを表示します。"
+
+# デバッグメッセージ
+debug:
+  cannot-use-griefprevention: "{player} は GriefPrevention の保護により、エレベーターを使用できません"
+  target-protected: "{player} は使用できません - 移動先が GriefPrevention で保護されています"
+  moving-up: "{player} が鉄ブロックエレベーターで上昇しています"
+  moving-down: "{player} が鉄ブロックエレベーターで下降しています"
+
+# エラーメッセージ
+error:
+  griefprevention-check: "GriefPrevention のクレームチェック中にエラーが発生しました: {error}"

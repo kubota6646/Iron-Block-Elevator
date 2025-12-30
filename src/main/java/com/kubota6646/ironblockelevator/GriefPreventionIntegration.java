@@ -15,7 +15,7 @@ public class GriefPreventionIntegration {
         this.enabled = plugin.getServer().getPluginManager().isPluginEnabled("GriefPrevention");
         
         if (enabled) {
-            plugin.getLogger().info("GriefPrevention integration enabled");
+            plugin.getLogger().info(plugin.getMessages().getGriefPreventionEnabled());
         }
     }
 
@@ -56,7 +56,7 @@ public class GriefPreventionIntegration {
             
         } catch (Exception e) {
             // If there's any error, log it and deny access to be safe
-            plugin.getLogger().warning("Error checking GriefPrevention claim for " + player.getName() + ": " + e.getMessage());
+            plugin.getLogger().warning(plugin.getMessages().getErrorGriefPreventionCheck(e.getMessage()));
             return false;
         }
     }
