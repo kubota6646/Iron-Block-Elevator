@@ -19,12 +19,17 @@ command:
   reload-success: "&a設定を正常に再読み込みしました！"
   unknown-command: "&c不明なサブコマンドです。/{label} でヘルプを表示します。"
 
+# クールダウンメッセージ
+cooldown:
+  message: "&cエレベーターは使用できません。あと &e{time}秒 &c待ってください。"
+
 # デバッグメッセージ
 debug:
   cannot-use-griefprevention: "{player} は GriefPrevention の保護により、エレベーターを使用できません"
   target-protected: "{player} は使用できません - 移動先が GriefPrevention で保護されています"
   moving-up: "{player} が鉄ブロックエレベーターで上昇しています"
   moving-down: "{player} が鉄ブロックエレベーターで下降しています"
+  cooldown: "{player} はクールダウン中です。残り {time} 秒"
 
 # エラーメッセージ
 error:

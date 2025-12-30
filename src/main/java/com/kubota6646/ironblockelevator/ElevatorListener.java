@@ -8,12 +8,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class ElevatorListener implements Listener {
 
     private final IronBlockElevator plugin;
+    private final Map<UUID, Long> cooldowns;
 
     public ElevatorListener(IronBlockElevator plugin) {
         this.plugin = plugin;
+        this.cooldowns = new HashMap<>();
     }
 
     @EventHandler
@@ -42,6 +48,29 @@ public class ElevatorListener implements Listener {
             return;
         }
 
+        // Check cooldown
+        int cooldownSeconds = plugin.getElevatorConfig().getCooldown();
+        if (cooldownSeconds > 0) {
+            UUID playerId = player.getUniqueId();
+            long currentTime = System.currentTimeMillis();
+            
+            if (cooldowns.containsKey(playerId)) {
+                long lastUse = cooldowns.get(playerId);
+                long timeSinceLastUse = currentTime - lastUse;
+                long cooldownMillis = cooldownSeconds * 1000L;
+                
+                if (timeSinceLastUse < cooldownMillis) {
+                    long remainingTime = (cooldownMillis - timeSinceLastUse) / 1000;
+                    if (plugin.getElevatorConfig().isDebug()) {
+                        plugin.getLogger().info(plugin.getMessages().getDebugCooldown(player.getName(), String.valueOf(remainingTime)));
+                    }
+                    // Send cooldown message to player
+                    player.sendMessage(plugin.getMessages().getCooldownMessage(String.valueOf(remainingTime)));
+                    return;
+                }
+            }
+        }
+
         // Check if player is jumping (moving upward)
         if (player.getVelocity().getY() > 0) {
             // Find the next elevator block above
@@ -64,6 +93,11 @@ public class ElevatorListener implements Listener {
                 Vector velocity = player.getVelocity();
                 velocity.setY(speed);
                 player.setVelocity(velocity);
+                
+                // Update cooldown
+                if (plugin.getElevatorConfig().getCooldown() > 0) {
+                    cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
+                }
                 
                 if (plugin.getElevatorConfig().isDebug()) {
                     plugin.getLogger().info(plugin.getMessages().getDebugMovingUp(player.getName()));
@@ -92,6 +126,11 @@ public class ElevatorListener implements Listener {
                 Vector velocity = player.getVelocity();
                 velocity.setY(speed);
                 player.setVelocity(velocity);
+                
+                // Update cooldown
+                if (plugin.getElevatorConfig().getCooldown() > 0) {
+                    cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
+                }
                 
                 if (plugin.getElevatorConfig().isDebug()) {
                     plugin.getLogger().info(plugin.getMessages().getDebugMovingDown(player.getName()));

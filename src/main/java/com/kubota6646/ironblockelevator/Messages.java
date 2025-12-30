@@ -112,6 +112,10 @@ public class Messages {
         return getMessage("command.unknown-command", "label", label);
     }
 
+    public String getCooldownMessage(String time) {
+        return getMessage("cooldown.message", "time", time);
+    }
+
     public String getDebugCannotUseGriefPrevention(String player) {
         return getMessage("debug.cannot-use-griefprevention", "player", player);
     }
@@ -126,6 +130,10 @@ public class Messages {
 
     public String getDebugMovingDown(String player) {
         return getMessage("debug.moving-down", "player", player);
+    }
+
+    public String getDebugCooldown(String player, String time) {
+        return getMessage("debug.cooldown", "player", player, "time", time);
     }
 
     public String getErrorGriefPreventionCheck(String error) {

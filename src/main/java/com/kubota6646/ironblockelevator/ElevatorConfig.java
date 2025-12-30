@@ -11,6 +11,7 @@ public class ElevatorConfig {
     private double upwardSpeed;
     private double downwardSpeed;
     private int maxHeight;
+    private int cooldown;
     private boolean debug;
 
     public ElevatorConfig(IronBlockElevator plugin) {
@@ -39,6 +40,7 @@ public class ElevatorConfig {
         this.upwardSpeed = config.getDouble("upward-speed", 0.5);
         this.downwardSpeed = config.getDouble("downward-speed", 0.5);
         this.maxHeight = config.getInt("max-height", 256);
+        this.cooldown = config.getInt("cooldown", 2);
         this.debug = config.getBoolean("debug", false);
     }
 
@@ -60,6 +62,10 @@ public class ElevatorConfig {
 
     public int getMaxHeight() {
         return maxHeight;
+    }
+
+    public int getCooldown() {
+        return cooldown;
     }
 
     public boolean isDebug() {
