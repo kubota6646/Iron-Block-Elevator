@@ -97,7 +97,7 @@ Gradle タスク → build → build をダブルクリック
 ```
 
 #### 生成物
-- `build/libs/IronBlockElevator-0.0.1.jar` (プラグイン本体)
+- `build/libs/IronBlockElevator-1.1.0.jar` (プラグイン本体)
 
 #### 動作環境
 - Minecraft Java Edition 1.19.4

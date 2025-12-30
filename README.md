@@ -2,7 +2,7 @@
 
 Minecraft Java版 1.19.4 対応のブロックエレベータープラグイン
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/kubota6646/Iron-Block-Elevator)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/kubota6646/Iron-Block-Elevator)
 [![Minecraft](https://img.shields.io/badge/minecraft-1.19.4-green.svg)](https://www.spigotmc.org/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
@@ -156,7 +156,7 @@ GriefPrevention がインストールされている場合、土地保護シス�
 1. IntelliJ IDEA でプロジェクトを開く
 2. Gradle ツールウィンドウを開く（View → Tool Windows → Gradle）
 3. Tasks → build → build をダブルクリック
-4. ビルドが完了すると、`build/libs/IronBlockElevator-0.0.1.jar` が生成されます
+4. ビルドが完了すると、`build/libs/IronBlockElevator-1.1.0.jar` が生成されます
 
 ### コマンドラインでのビルド
 
@@ -168,12 +168,12 @@ GriefPrevention がインストールされている場合、土地保護シス�
 gradlew.bat build
 ```
 
-ビルドされたプラグインは `build/libs/IronBlockElevator-0.0.1.jar` に生成されます。
+ビルドされたプラグインは `build/libs/IronBlockElevator-1.1.0.jar` に生成されます。
 
 ## 📦 インストール
 
 1. **プラグインの配置**
-   - ビルドされた `IronBlockElevator-0.0.1.jar` をサーバーの `plugins` フォルダにコピー
+   - ビルドされた `IronBlockElevator-1.1.0.jar` をサーバーの `plugins` フォルダにコピー
 
 2. **サーバーの起動**
    - サーバーを起動または再起動
@@ -230,6 +230,12 @@ config.yml の `elevator-block` に指定した値が正しいか確認してく
 | 連携プラグイン | GriefPrevention（オプション） |
 
 ## 📝 更新履歴
+
+### v1.1.0
+- 🐛 エレベーター機能の動作を修正
+- 🐛 クールダウンメッセージのスパムを修正
+- 🐛 使用していない時のエラーメッセージ表示を修正
+- ⚡ テレポートベースのエレベーターシステムに改善
 
 ### v0.0.1（初回リリース）
 - ✨ 基本的なエレベーター機能の実装
