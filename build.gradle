@@ -25,6 +25,19 @@ repositories {
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
     compileOnly 'com.github.TechFortress:GriefPrevention:16.18'
+    
+    // Force secure versions of transitive dependencies to fix vulnerabilities
+    constraints {
+        implementation('com.google.guava:guava:33.0.0-jre') {
+            because 'CVE-2023-2976 and CVE-2020-8908 fixed in 32.0.0+'
+        }
+        implementation('org.apache.commons:commons-lang3:3.14.0') {
+            because 'CVE-2025-48924 fixed in 3.14.0+'
+        }
+        implementation('org.yaml:snakeyaml:2.2') {
+            because 'CVE-2022-1471 fixed in 2.0+'
+        }
+    }
 }
 
 def targetJavaVersion = 17
