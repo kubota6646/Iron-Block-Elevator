@@ -21,7 +21,7 @@ command:
 
 # クールダウンメッセージ
 cooldown:
-  message: "&cエレベーターは使用できません。あと &e{time}秒 &c待ってください。"
+  message: "&cエレベーターは使用できません。あと &e{time}秒 &cお待ちください。"
 
 # デバッグメッセージ
 debug:
