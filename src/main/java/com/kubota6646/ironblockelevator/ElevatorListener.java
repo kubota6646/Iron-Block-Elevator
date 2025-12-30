@@ -85,9 +85,6 @@ public class ElevatorListener implements Listener {
                     return;
                 }
                 
-                // Calculate the distance to the target block
-                double distance = targetBlock.getY() - player.getLocation().getY();
-                
                 // Apply upward velocity
                 double speed = plugin.getElevatorConfig().getUpwardSpeed();
                 Vector velocity = player.getVelocity();
@@ -117,9 +114,6 @@ public class ElevatorListener implements Listener {
                     }
                     return;
                 }
-                
-                // Calculate the distance to the target block
-                double distance = player.getLocation().getY() - targetBlock.getY();
                 
                 // Apply downward velocity
                 double speed = -plugin.getElevatorConfig().getDownwardSpeed();

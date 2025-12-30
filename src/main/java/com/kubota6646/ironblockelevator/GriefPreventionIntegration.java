@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class GriefPreventionIntegration {
 
     private final IronBlockElevator plugin;
-    private boolean enabled;
+    private final boolean enabled;
 
     public GriefPreventionIntegration(IronBlockElevator plugin) {
         this.plugin = plugin;
@@ -49,7 +49,8 @@ public class GriefPreventionIntegration {
 
             // Check if player has access trust
             // Access trust allows player to use buttons, levers, beds, etc.
-            String errorMessage = claim.allowAccess(player, location);
+            @SuppressWarnings("deprecation")
+            String errorMessage = claim.allowAccess(player);
             
             // If errorMessage is null, the player has access
             return errorMessage == null;
@@ -59,9 +60,5 @@ public class GriefPreventionIntegration {
             plugin.getLogger().warning(plugin.getMessages().getErrorGriefPreventionCheck(e.getMessage()));
             return false;
         }
-    }
-
-    public boolean isEnabled() {
-        return enabled;
     }
 }

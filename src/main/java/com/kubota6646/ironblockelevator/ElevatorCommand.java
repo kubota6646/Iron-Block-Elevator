@@ -3,6 +3,7 @@ package com.kubota6646.ironblockelevator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 public class ElevatorCommand implements CommandExecutor {
 
@@ -13,13 +14,14 @@ public class ElevatorCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Messages messages = plugin.getMessages();
         
         if (args.length == 0) {
             sender.sendMessage(messages.getCommandHeader());
-            sender.sendMessage(messages.getCommandVersion(plugin.getDescription().getVersion()));
-            sender.sendMessage(messages.getCommandAuthor(plugin.getDescription().getAuthors().toString()));
+            sender.sendMessage(messages.getCommandVersion(plugin.getPluginMeta().getVersion()));
+            String authors = String.join(", ", plugin.getPluginMeta().getAuthors());
+            sender.sendMessage(messages.getCommandAuthor(authors));
             sender.sendMessage(messages.getCommandReloadUsage(label));
             return true;
         }

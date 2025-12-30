@@ -1,11 +1,9 @@
 package com.kubota6646.ironblockelevator;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +12,6 @@ public class Messages {
 
     private final IronBlockElevator plugin;
     private FileConfiguration messageConfig;
-    private File messageFile;
 
     public Messages(IronBlockElevator plugin) {
         this.plugin = plugin;
@@ -24,11 +21,13 @@ public class Messages {
     private void loadMessages() {
         // Create plugin data folder if it doesn't exist
         if (!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdirs();
+            if (!plugin.getDataFolder().mkdirs()) {
+                plugin.getLogger().warning("Failed to create plugin data folder");
+            }
         }
 
         // Create message.yml file if it doesn't exist
-        messageFile = new File(plugin.getDataFolder(), "message.yml");
+        File messageFile = new File(plugin.getDataFolder(), "message.yml");
         if (!messageFile.exists()) {
             plugin.saveResource("message.yml", false);
         }
@@ -49,17 +48,24 @@ public class Messages {
         loadMessages();
     }
 
+    @SuppressWarnings("deprecation")
     public String getMessage(String path) {
         String message = messageConfig.getString(path);
         if (message == null) {
             plugin.getLogger().warning("Message not found: " + path);
             return path;
         }
-        return ChatColor.translateAlternateColorCodes('&', message);
+        // Use legacy color code translation
+        return org.bukkit.ChatColor.translateAlternateColorCodes('&', message);
     }
 
+    @SuppressWarnings("deprecation")
     public String getMessage(String path, String... replacements) {
-        String message = getMessage(path);
+        String message = messageConfig.getString(path);
+        if (message == null) {
+            plugin.getLogger().warning("Message not found: " + path);
+            return path;
+        }
         
         // Apply replacements
         for (int i = 0; i < replacements.length; i += 2) {
@@ -68,7 +74,8 @@ public class Messages {
             }
         }
         
-        return message;
+        // Use legacy color code translation
+        return org.bukkit.ChatColor.translateAlternateColorCodes('&', message);
     }
 
     // Convenience methods for common messages
