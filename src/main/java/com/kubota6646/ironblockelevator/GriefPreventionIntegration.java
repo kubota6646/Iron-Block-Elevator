@@ -29,10 +29,13 @@ public class GriefPreventionIntegration {
      */
     public boolean canUseElevator(Player player, Location location) {
         // If GriefPrevention is not enabled, allow usage
-        if (!enabled) {
-            return true;
+        if (enabled) {
+            return checkClaimPermission(player, location);
         }
+        return true;
+    }
 
+    private boolean checkClaimPermission(Player player, Location location) {
         try {
             // Get the claim at this location
             Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, false, null);

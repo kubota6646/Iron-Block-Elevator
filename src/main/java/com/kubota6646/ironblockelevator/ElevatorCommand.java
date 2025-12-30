@@ -14,13 +14,14 @@ public class ElevatorCommand implements CommandExecutor {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Messages messages = plugin.getMessages();
         
         if (args.length == 0) {
             sender.sendMessage(messages.getCommandHeader());
-            sender.sendMessage(messages.getCommandVersion(plugin.getPluginMeta().getVersion()));
-            String authors = String.join(", ", plugin.getPluginMeta().getAuthors());
+            sender.sendMessage(messages.getCommandVersion(plugin.getDescription().getVersion()));
+            String authors = String.join(", ", plugin.getDescription().getAuthors());
             sender.sendMessage(messages.getCommandAuthor(authors));
             sender.sendMessage(messages.getCommandReloadUsage(label));
             return true;
