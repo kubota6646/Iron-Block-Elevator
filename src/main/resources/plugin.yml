@@ -1,0 +1,14 @@
+name: IronBlockElevator
+version: ${project.version}
+main: com.kubota6646.ironblockelevator.IronBlockElevator
+api-version: 1.19
+author: kubota6646
+description: 鉄ブロックエレベーターを使用可能にするプラグイン
+website: https://github.com/kubota6646/Iron-Block-Elevator
+softdepend: [GriefPrevention]
+
+commands:
+  ironblockelevator:
+    description: Main command for Iron Block Elevator
+    usage: /<command> [reload]
+    aliases: [ibe]

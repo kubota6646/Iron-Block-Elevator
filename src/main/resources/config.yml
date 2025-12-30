@@ -1,0 +1,26 @@
+# 鉄ブロックエレベーター 設定ファイル
+
+# プラグイン機能の有効/無効
+enabled: true
+
+# エレベーターとして使用するブロックの種類
+# 使用可能なブロック名: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# 例: IRON_BLOCK, GOLD_BLOCK, DIAMOND_BLOCK, EMERALD_BLOCK, QUARTZ_BLOCK など
+elevator-block: IRON_BLOCK
+
+# 上昇時の垂直速度（エレベーターブロックの上でジャンプした時）
+upward-speed: 0.5
+
+# 下降時の垂直速度（エレベーターブロックの上でスニークした時）
+downward-speed: 0.5
+
+# エレベーターが移動できる最大高度
+max-height: 256
+
+# クールダウン時間（秒単位）
+# エレベーター使用後、次に使用できるまでの待機時間
+# 0 に設定するとクールダウンなし
+cooldown: 2
+
+# デバッグメッセージの有効化
+debug: false
