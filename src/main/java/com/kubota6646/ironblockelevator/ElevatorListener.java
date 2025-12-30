@@ -1,5 +1,6 @@
 package com.kubota6646.ironblockelevator;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,10 +17,12 @@ public class ElevatorListener implements Listener {
 
     private final IronBlockElevator plugin;
     private final Map<UUID, Long> cooldowns;
+    private final Map<UUID, Long> lastCooldownMessage;
 
     public ElevatorListener(IronBlockElevator plugin) {
         this.plugin = plugin;
         this.cooldowns = new HashMap<>();
+        this.lastCooldownMessage = new HashMap<>();
     }
 
     @EventHandler
@@ -31,8 +34,13 @@ public class ElevatorListener implements Listener {
 
         Player player = event.getPlayer();
         
-        // Get the block the player is standing on
-        Block blockBelow = player.getLocation().subtract(0, 0.1, 0).getBlock();
+        // Get the block the player is standing on (exactly 1 block below)
+        Location playerLoc = player.getLocation();
+        Block blockBelow = playerLoc.getWorld().getBlockAt(
+            playerLoc.getBlockX(),
+            playerLoc.getBlockY() - 1,
+            playerLoc.getBlockZ()
+        );
         
         // Check if the block is the configured elevator block
         Material elevatorBlock = plugin.getElevatorConfig().getElevatorBlock();
@@ -60,19 +68,24 @@ public class ElevatorListener implements Listener {
                 long cooldownMillis = cooldownSeconds * 1000L;
                 
                 if (timeSinceLastUse < cooldownMillis) {
-                    long remainingTime = (cooldownMillis - timeSinceLastUse) / 1000;
-                    if (plugin.getElevatorConfig().isDebug()) {
-                        plugin.getLogger().info(plugin.getMessages().getDebugCooldown(player.getName(), String.valueOf(remainingTime)));
+                    // Only send message once per second to avoid spam
+                    Long lastMessage = lastCooldownMessage.get(playerId);
+                    if (lastMessage == null || (currentTime - lastMessage) > 1000) {
+                        long remainingTime = (cooldownMillis - timeSinceLastUse) / 1000 + 1;
+                        player.sendMessage(plugin.getMessages().getCooldownMessage(String.valueOf(remainingTime)));
+                        lastCooldownMessage.put(playerId, currentTime);
+                        
+                        if (plugin.getElevatorConfig().isDebug()) {
+                            plugin.getLogger().info(plugin.getMessages().getDebugCooldown(player.getName(), String.valueOf(remainingTime)));
+                        }
                     }
-                    // Send cooldown message to player
-                    player.sendMessage(plugin.getMessages().getCooldownMessage(String.valueOf(remainingTime)));
                     return;
                 }
             }
         }
 
         // Check if player is jumping (moving upward)
-        if (player.getVelocity().getY() > 0) {
+        if (player.getVelocity().getY() > 0.1) {
             // Find the next elevator block above
             Block targetBlock = findNextElevatorBlockAbove(blockBelow, plugin.getElevatorConfig().getMaxHeight());
             
@@ -85,11 +98,14 @@ public class ElevatorListener implements Listener {
                     return;
                 }
                 
-                // Apply upward velocity
-                double speed = plugin.getElevatorConfig().getUpwardSpeed();
-                Vector velocity = player.getVelocity();
-                velocity.setY(speed);
-                player.setVelocity(velocity);
+                // Teleport player to the target elevator block
+                Location targetLoc = targetBlock.getLocation().clone().add(0.5, 1.0, 0.5);
+                targetLoc.setPitch(player.getLocation().getPitch());
+                targetLoc.setYaw(player.getLocation().getYaw());
+                player.teleport(targetLoc);
+                
+                // Add small upward velocity for smooth landing
+                player.setVelocity(new Vector(0, 0.5, 0));
                 
                 // Update cooldown
                 if (plugin.getElevatorConfig().getCooldown() > 0) {
@@ -115,11 +131,11 @@ public class ElevatorListener implements Listener {
                     return;
                 }
                 
-                // Apply downward velocity
-                double speed = -plugin.getElevatorConfig().getDownwardSpeed();
-                Vector velocity = player.getVelocity();
-                velocity.setY(speed);
-                player.setVelocity(velocity);
+                // Teleport player to the target elevator block
+                Location targetLoc = targetBlock.getLocation().clone().add(0.5, 1.0, 0.5);
+                targetLoc.setPitch(player.getLocation().getPitch());
+                targetLoc.setYaw(player.getLocation().getYaw());
+                player.teleport(targetLoc);
                 
                 // Update cooldown
                 if (plugin.getElevatorConfig().getCooldown() > 0) {
