@@ -8,7 +8,7 @@
 1. プロジェクトを IntelliJ IDEA で開く
 2. 右側の Gradle ツールウィンドウを開く
 3. `Tasks` → `build` → `build` をダブルクリック
-4. ビルド完了後、`build/libs/IronBlockElevator-1.0.0.jar` が生成される
+4. ビルド完了後、`build/libs/IronBlockElevator-0.0.1.jar` が生成される
 
 #### コマンドラインを使用
 ```bash
@@ -18,7 +18,7 @@
 ### 2. サーバーへのインストール
 
 1. Minecraft 1.19.4 対応の Paper または Spigot サーバーを用意
-2. `build/libs/IronBlockElevator-1.0.0.jar` をサーバーの `plugins` フォルダにコピー
+2. `build/libs/IronBlockElevator-0.0.1.jar` をサーバーの `plugins` フォルダにコピー
 3. サーバーを起動
 4. コンソールに "IronBlockElevator has been enabled!" が表示されることを確認
 

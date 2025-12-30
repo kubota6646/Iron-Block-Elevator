@@ -30,7 +30,7 @@ Minecraft Java版 1.19.4 対応の鉄ブロックエレベータープラグイ�
 ./gradlew build
 ```
 
-ビルドされたプラグインは `build/libs/IronBlockElevator-1.0.0.jar` に生成されます。
+ビルドされたプラグインは `build/libs/IronBlockElevator-0.0.1.jar` に生成されます。
 
 ## インストール
 

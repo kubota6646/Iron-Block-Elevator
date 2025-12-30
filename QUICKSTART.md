@@ -27,7 +27,7 @@ IntelliJ が自動的に Gradle プロジェクトを検出し、依存関係を
 
 ビルド完了後、以下の場所に JAR ファイルが生成されます：
 ```
-build/libs/IronBlockElevator-1.0.0.jar
+build/libs/IronBlockElevator-0.0.1.jar
 ```
 
 ### 5. サーバーにインストール
