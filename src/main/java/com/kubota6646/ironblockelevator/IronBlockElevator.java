@@ -3,8 +3,6 @@ package com.kubota6646.ironblockelevator;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
-
 public class IronBlockElevator extends JavaPlugin {
 
     private ElevatorConfig elevatorConfig;
