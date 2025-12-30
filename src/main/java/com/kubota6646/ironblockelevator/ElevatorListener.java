@@ -28,8 +28,9 @@ public class ElevatorListener implements Listener {
         // Get the block the player is standing on
         Block blockBelow = player.getLocation().subtract(0, 0.1, 0).getBlock();
         
-        // Check if the block is an iron block
-        if (blockBelow.getType() != Material.IRON_BLOCK) {
+        // Check if the block is the configured elevator block
+        Material elevatorBlock = plugin.getElevatorConfig().getElevatorBlock();
+        if (blockBelow.getType() != elevatorBlock) {
             return;
         }
 
@@ -43,8 +44,8 @@ public class ElevatorListener implements Listener {
 
         // Check if player is jumping (moving upward)
         if (player.getVelocity().getY() > 0) {
-            // Find the next iron block above
-            Block targetBlock = findNextIronBlockAbove(blockBelow, plugin.getElevatorConfig().getMaxHeight());
+            // Find the next elevator block above
+            Block targetBlock = findNextElevatorBlockAbove(blockBelow, plugin.getElevatorConfig().getMaxHeight());
             
             if (targetBlock != null) {
                 // Check GriefPrevention permissions for the target location
@@ -71,8 +72,8 @@ public class ElevatorListener implements Listener {
         }
         // Check if player is sneaking (moving downward)
         else if (player.isSneaking()) {
-            // Find the next iron block below
-            Block targetBlock = findNextIronBlockBelow(blockBelow);
+            // Find the next elevator block below
+            Block targetBlock = findNextElevatorBlockBelow(blockBelow);
             
             if (targetBlock != null) {
                 // Check GriefPrevention permissions for the target location
@@ -100,16 +101,17 @@ public class ElevatorListener implements Listener {
     }
 
     /**
-     * Find the next iron block above the current position
+     * Find the next elevator block above the current position
      */
-    private Block findNextIronBlockAbove(Block startBlock, int maxHeight) {
+    private Block findNextElevatorBlockAbove(Block startBlock, int maxHeight) {
         int startY = startBlock.getY();
         int worldMaxHeight = Math.min(startBlock.getWorld().getMaxHeight(), maxHeight);
+        Material elevatorBlock = plugin.getElevatorConfig().getElevatorBlock();
         
         for (int y = startY + 1; y < worldMaxHeight; y++) {
             Block block = startBlock.getWorld().getBlockAt(startBlock.getX(), y, startBlock.getZ());
-            if (block.getType() == Material.IRON_BLOCK) {
-                // Check if there's space above the iron block for the player
+            if (block.getType() == elevatorBlock) {
+                // Check if there's space above the elevator block for the player
                 Block above = block.getRelative(0, 1, 0);
                 Block above2 = block.getRelative(0, 2, 0);
                 
@@ -123,16 +125,17 @@ public class ElevatorListener implements Listener {
     }
 
     /**
-     * Find the next iron block below the current position
+     * Find the next elevator block below the current position
      */
-    private Block findNextIronBlockBelow(Block startBlock) {
+    private Block findNextElevatorBlockBelow(Block startBlock) {
         int startY = startBlock.getY();
         int worldMinHeight = startBlock.getWorld().getMinHeight();
+        Material elevatorBlock = plugin.getElevatorConfig().getElevatorBlock();
         
         for (int y = startY - 1; y >= worldMinHeight; y--) {
             Block block = startBlock.getWorld().getBlockAt(startBlock.getX(), y, startBlock.getZ());
-            if (block.getType() == Material.IRON_BLOCK) {
-                // Check if there's space above the iron block for the player
+            if (block.getType() == elevatorBlock) {
+                // Check if there's space above the elevator block for the player
                 Block above = block.getRelative(0, 1, 0);
                 Block above2 = block.getRelative(0, 2, 0);
                 

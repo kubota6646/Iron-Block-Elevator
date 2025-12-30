@@ -3,10 +3,15 @@
 # プラグイン機能の有効/無効
 enabled: true
 
-# 上昇時の垂直速度（鉄ブロックの上でジャンプした時）
+# エレベーターとして使用するブロックの種類
+# 使用可能なブロック名: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# 例: IRON_BLOCK, GOLD_BLOCK, DIAMOND_BLOCK, EMERALD_BLOCK, QUARTZ_BLOCK など
+elevator-block: IRON_BLOCK
+
+# 上昇時の垂直速度（エレベーターブロックの上でジャンプした時）
 upward-speed: 0.5
 
-# 下降時の垂直速度（鉄ブロックの上でスニークした時）
+# 下降時の垂直速度（エレベーターブロックの上でスニークした時）
 downward-speed: 0.5
 
 # エレベーターが移動できる最大高度
