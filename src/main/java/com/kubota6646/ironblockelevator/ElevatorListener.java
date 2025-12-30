@@ -56,7 +56,14 @@ public class ElevatorListener implements Listener {
             return;
         }
 
-        // Check cooldown
+        // Check if player is trying to use the elevator (jumping or sneaking)
+        boolean tryingToUse = player.getVelocity().getY() > 0.1 || player.isSneaking();
+        
+        if (!tryingToUse) {
+            return; // Player is just standing on the block, not trying to use it
+        }
+
+        // Check cooldown only when player is trying to use the elevator
         int cooldownSeconds = plugin.getElevatorConfig().getCooldown();
         if (cooldownSeconds > 0) {
             UUID playerId = player.getUniqueId();
