@@ -34,6 +34,9 @@ public class ElevatorListener implements Listener {
         }
         
         Player player = event.getPlayer();
+        if (player == null) {
+            return;
+        }
         
         // Check if plugin is enabled
         if (!plugin.getElevatorConfig().isEnabled()) {
