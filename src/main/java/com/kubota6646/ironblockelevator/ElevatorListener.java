@@ -5,10 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -20,21 +18,11 @@ public class ElevatorListener implements Listener {
     private final IronBlockElevator plugin;
     private final Map<UUID, Long> cooldowns;
     private final Map<UUID, Long> lastCooldownMessage;
-    private final Map<UUID, Long> lastSneakTime;
 
     public ElevatorListener(IronBlockElevator plugin) {
         this.plugin = plugin;
         this.cooldowns = new HashMap<>();
         this.lastCooldownMessage = new HashMap<>();
-        this.lastSneakTime = new HashMap<>();
-    }
-    
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
-        // Track when player starts sneaking
-        if (event.isSneaking()) {
-            lastSneakTime.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
-        }
     }
 
     @EventHandler
@@ -71,11 +59,9 @@ public class ElevatorListener implements Listener {
         // Determine what action the player is trying to do
         boolean isJumping = player.getVelocity().getY() > 0.1;
         
-        // Check if player has recently sneaked (within last 500ms) or is currently sneaking
+        // Check if player is currently sneaking (prioritize direct check)
         UUID playerId = player.getUniqueId();
-        long currentTime = System.currentTimeMillis();
-        Long lastSneak = lastSneakTime.get(playerId);
-        boolean isSneaking = player.isSneaking() || (lastSneak != null && (currentTime - lastSneak) < 500);
+        boolean isSneaking = player.isSneaking();
         
         // Check if player is trying to use the elevator
         if (!isJumping && !isSneaking) {
@@ -165,8 +151,6 @@ public class ElevatorListener implements Listener {
                 // Update cooldown
                 if (plugin.getElevatorConfig().getCooldown() > 0) {
                     cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
-                    // Clear the sneak time after successful use to prevent accidental re-use
-                    lastSneakTime.remove(player.getUniqueId());
                 }
                 
                 if (plugin.getElevatorConfig().isDebug()) {
