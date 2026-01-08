@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -20,21 +19,46 @@ public class ElevatorListener implements Listener {
     private final IronBlockElevator plugin;
     private final Map<UUID, Long> cooldowns;
     private final Map<UUID, Long> lastCooldownMessage;
-    private final Map<UUID, Long> lastSneakTime;
 
     public ElevatorListener(IronBlockElevator plugin) {
         this.plugin = plugin;
         this.cooldowns = new HashMap<>();
         this.lastCooldownMessage = new HashMap<>();
-        this.lastSneakTime = new HashMap<>();
     }
-    
-    @EventHandler(priority = EventPriority.MONITOR)
+
+    @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
-        // Track when player starts sneaking
-        if (event.isSneaking()) {
-            lastSneakTime.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
+        // When player starts sneaking, immediately check if they're on an elevator block
+        if (!event.isSneaking()) {
+            return;
         }
+        
+        Player player = event.getPlayer();
+        if (player == null) {
+            return;
+        }
+        
+        // Check if plugin is enabled
+        if (!plugin.getElevatorConfig().isEnabled()) {
+            return;
+        }
+        
+        // Get the block the player is standing on
+        Location playerLoc = player.getLocation();
+        Block blockBelow = playerLoc.getWorld().getBlockAt(
+            playerLoc.getBlockX(),
+            playerLoc.getBlockY() - 1,
+            playerLoc.getBlockZ()
+        );
+        
+        // Check if the block is the configured elevator block
+        Material elevatorBlock = plugin.getElevatorConfig().getElevatorBlock();
+        if (blockBelow.getType() != elevatorBlock) {
+            return;
+        }
+        
+        // Trigger elevator descent immediately
+        tryElevatorDescend(player, blockBelow);
     }
 
     @EventHandler
@@ -71,11 +95,9 @@ public class ElevatorListener implements Listener {
         // Determine what action the player is trying to do
         boolean isJumping = player.getVelocity().getY() > 0.1;
         
-        // Check if player has recently sneaked (within last 500ms) or is currently sneaking
+        // Check if player is currently sneaking (prioritize direct check)
         UUID playerId = player.getUniqueId();
-        long currentTime = System.currentTimeMillis();
-        Long lastSneak = lastSneakTime.get(playerId);
-        boolean isSneaking = player.isSneaking() || (lastSneak != null && (currentTime - lastSneak) < 500);
+        boolean isSneaking = player.isSneaking();
         
         // Check if player is trying to use the elevator
         if (!isJumping && !isSneaking) {
@@ -144,34 +166,76 @@ public class ElevatorListener implements Listener {
         }
         // Check if player is sneaking (moving downward)
         else if (isSneaking) {
-            // Find the next elevator block below
-            Block targetBlock = findNextElevatorBlockBelow(blockBelow);
+            // Trigger elevator descent
+            tryElevatorDescend(player, blockBelow);
+        }
+    }
+
+    /**
+     * Try to trigger elevator descent for a player standing on an elevator block
+     */
+    private void tryElevatorDescend(Player player, Block blockBelow) {
+        // Check GriefPrevention permissions
+        if (!plugin.getGriefPreventionIntegration().canUseElevator(player, blockBelow.getLocation())) {
+            if (plugin.getElevatorConfig().isDebug()) {
+                plugin.getLogger().info(plugin.getMessages().getDebugCannotUseGriefPrevention(player.getName()));
+            }
+            return;
+        }
+        
+        // Check cooldown
+        UUID playerId = player.getUniqueId();
+        int cooldownSeconds = plugin.getElevatorConfig().getCooldown();
+        if (cooldownSeconds > 0) {
+            long currentTimeCheck = System.currentTimeMillis();
             
-            if (targetBlock != null) {
-                // Check GriefPrevention permissions for the target location
-                if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
-                    if (plugin.getElevatorConfig().isDebug()) {
-                        plugin.getLogger().info(plugin.getMessages().getDebugTargetProtected(player.getName()));
+            if (cooldowns.containsKey(playerId)) {
+                long lastUse = cooldowns.get(playerId);
+                long timeSinceLastUse = currentTimeCheck - lastUse;
+                long cooldownMillis = cooldownSeconds * 1000L;
+                
+                if (timeSinceLastUse < cooldownMillis) {
+                    // Only send message once per second to avoid spam
+                    Long lastMessage = lastCooldownMessage.get(playerId);
+                    if (lastMessage == null || (currentTimeCheck - lastMessage) > 1000) {
+                        long remainingTime = (cooldownMillis - timeSinceLastUse) / 1000 + 1;
+                        player.sendMessage(plugin.getMessages().getCooldownMessage(String.valueOf(remainingTime)));
+                        lastCooldownMessage.put(playerId, currentTimeCheck);
+                        
+                        if (plugin.getElevatorConfig().isDebug()) {
+                            plugin.getLogger().info(plugin.getMessages().getDebugCooldown(player.getName(), String.valueOf(remainingTime)));
+                        }
                     }
                     return;
                 }
-                
-                // Teleport player to the target elevator block
-                Location targetLoc = targetBlock.getLocation().clone().add(0.5, 1.0, 0.5);
-                targetLoc.setPitch(player.getLocation().getPitch());
-                targetLoc.setYaw(player.getLocation().getYaw());
-                player.teleport(targetLoc);
-                
-                // Update cooldown
-                if (plugin.getElevatorConfig().getCooldown() > 0) {
-                    cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
-                    // Clear the sneak time after successful use to prevent accidental re-use
-                    lastSneakTime.remove(player.getUniqueId());
-                }
-                
+            }
+        }
+        
+        // Find the next elevator block below
+        Block targetBlock = findNextElevatorBlockBelow(blockBelow);
+        
+        if (targetBlock != null) {
+            // Check GriefPrevention permissions for the target location
+            if (!plugin.getGriefPreventionIntegration().canUseElevator(player, targetBlock.getLocation())) {
                 if (plugin.getElevatorConfig().isDebug()) {
-                    plugin.getLogger().info(plugin.getMessages().getDebugMovingDown(player.getName()));
+                    plugin.getLogger().info(plugin.getMessages().getDebugTargetProtected(player.getName()));
                 }
+                return;
+            }
+            
+            // Teleport player to the target elevator block
+            Location targetLoc = targetBlock.getLocation().clone().add(0.5, 1.0, 0.5);
+            targetLoc.setPitch(player.getLocation().getPitch());
+            targetLoc.setYaw(player.getLocation().getYaw());
+            player.teleport(targetLoc);
+            
+            // Update cooldown
+            if (plugin.getElevatorConfig().getCooldown() > 0) {
+                cooldowns.put(player.getUniqueId(), System.currentTimeMillis());
+            }
+            
+            if (plugin.getElevatorConfig().isDebug()) {
+                plugin.getLogger().info(plugin.getMessages().getDebugMovingDown(player.getName()));
             }
         }
     }
