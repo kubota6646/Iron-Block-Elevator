@@ -2,7 +2,7 @@
 
 ## 実装完了内容
 
-Minecraft Java Edition 1.19.4 用の鉄ブロックエレベータープラグインを完全に実装しました。
+Minecraft Java Edition 1.21.8 用の鉄ブロックエレベータープラグインを完全に実装しました。
 
 ### プロジェクト統計
 
@@ -100,7 +100,7 @@ Gradle タスク → build → build をダブルクリック
 - `build/libs/IronBlockElevator-1.1.0.jar` (プラグイン本体)
 
 #### 動作環境
-- Minecraft Java Edition 1.19.4
+- Minecraft Java Edition 1.21.8
 - Paper または Spigot サーバー
 - Java 17 以上
 
@@ -147,9 +147,9 @@ da484db Add comprehensive testing and usage guide in Japanese
 - ✅ IntelliJ IDEA 2025.3.1
 - ✅ Gradle 8.5
 - ✅ Java 17
-- ✅ Minecraft 1.19.4
-- ✅ Paper API 1.19.4-R0.1-SNAPSHOT
-- ✅ Spigot API 1.19.4-R0.1-SNAPSHOT
+- ✅ Minecraft 1.21.8
+- ✅ Paper API 1.21.8-R0.1-SNAPSHOT
+- ✅ Spigot API 1.21.8-R0.1-SNAPSHOT
 
 ## 完成度: 100%
 
