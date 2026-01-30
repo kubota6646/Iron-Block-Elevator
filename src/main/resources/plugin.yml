@@ -1,7 +1,7 @@
 name: IronBlockElevator
 version: ${project.version}
 main: com.kubota6646.ironblockelevator.IronBlockElevator
-api-version: 1.19
+api-version: 1.21
 author: kubota6646
 description: 鉄ブロックエレベーターを使用可能にするプラグイン
 website: https://github.com/kubota6646/Iron-Block-Elevator
