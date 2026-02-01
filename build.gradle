@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.kubota6646'
-version = '1.1.0'
+version = '1.2.1'
 
 repositories {
     mavenCentral()
@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT'
     compileOnly 'com.github.TechFortress:GriefPrevention:16.18'
 }
 
@@ -36,7 +36,7 @@ configurations.all {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion

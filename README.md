@@ -1,9 +1,9 @@
 # Iron-Block-Elevator
 
-Minecraft Java版 1.19.4 対応のブロックエレベータープラグイン
+Minecraft Java版 1.21.8 対応のブロックエレベータープラグイン
 
 [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/kubota6646/Iron-Block-Elevator)
-[![Minecraft](https://img.shields.io/badge/minecraft-1.19.4-green.svg)](https://www.spigotmc.org/)
+[![Minecraft](https://img.shields.io/badge/minecraft-1.21.8-green.svg)](https://www.spigotmc.org/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
 ## 📖 概要
@@ -147,7 +147,7 @@ GriefPrevention がインストールされている場合、土地保護シス�
 
 ### 必要な環境
 
-- Java 17 以上
+- Java 21 以上
 - Gradle 8.5（Wrapper に含まれています）
 - IntelliJ IDEA 2025.3.1（推奨）
 
@@ -223,9 +223,9 @@ config.yml の `elevator-block` に指定した値が正しいか確認してく
 
 | 項目 | 詳細 |
 |-----|------|
-| Minecraft バージョン | 1.19.4 |
-| API | Paper/Spigot API 1.19.4-R0.1-SNAPSHOT |
-| Java バージョン | 17 |
+| Minecraft バージョン | 1.21.8 |
+| API | Paper/Spigot API 1.21.8-R0.1-SNAPSHOT |
+| Java バージョン | 21 |
 | ビルドツール | Gradle 8.5 |
 | 連携プラグイン | GriefPrevention（オプション） |
 

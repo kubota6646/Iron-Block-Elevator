@@ -32,7 +32,7 @@ build/libs/IronBlockElevator-1.1.0.jar
 
 ### 5. サーバーにインストール
 
-1. Minecraft 1.19.4 Paper/Spigot サーバーの `plugins` フォルダに JAR をコピー
+1. Minecraft 1.21.8 Paper/Spigot サーバーの `plugins` フォルダに JAR をコピー
 2. サーバーを起動
 3. コンソールで "IronBlockElevator has been enabled!" を確認
 
@@ -65,11 +65,11 @@ debug: false           # デバッグモード
 ## トラブルシューティング
 
 ### ビルドエラー
-- Java 17+ がインストールされているか確認
+- Java 21+ がインストールされているか確認
 - `./gradlew clean build` を実行
 
 ### プラグインが動かない
-- Paper/Spigot 1.19.4 を使用しているか確認
+- Paper/Spigot 1.21.8 を使用しているか確認
 - config.yml で `enabled: true` になっているか確認
 
 ### エレベーターが動かない
