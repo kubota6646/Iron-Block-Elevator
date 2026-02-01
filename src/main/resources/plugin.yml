@@ -1,5 +1,5 @@
 name: IronBlockElevator
-version: ${project.version}
+version: ${version}
 main: com.kubota6646.ironblockelevator.IronBlockElevator
 api-version: 1.21
 author: kubota6646
