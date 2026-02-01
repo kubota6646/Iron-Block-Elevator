@@ -147,7 +147,7 @@ GriefPrevention がインストールされている場合、土地保護シス�
 
 ### 必要な環境
 
-- Java 17 以上
+- Java 21 以上
 - Gradle 8.5（Wrapper に含まれています）
 - IntelliJ IDEA 2025.3.1（推奨）
 
@@ -225,7 +225,7 @@ config.yml の `elevator-block` に指定した値が正しいか確認してく
 |-----|------|
 | Minecraft バージョン | 1.21.8 |
 | API | Paper/Spigot API 1.21.8-R0.1-SNAPSHOT |
-| Java バージョン | 17 |
+| Java バージョン | 21 |
 | ビルドツール | Gradle 8.5 |
 | 連携プラグイン | GriefPrevention（オプション） |
 

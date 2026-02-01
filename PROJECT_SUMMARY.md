@@ -63,7 +63,7 @@ Iron-Block-Elevator/
 #### 4. ビルドシステム
 - ✅ Gradle 8.5 対応
 - ✅ Shadow プラグインで完全な JAR 生成
-- ✅ Java 17 ターゲット
+- ✅ Java 21 ターゲット
 - ✅ IntelliJ IDEA 2025.3.1 完全対応
 - ✅ Gradle Wrapper 同梱
 
@@ -102,7 +102,7 @@ Gradle タスク → build → build をダブルクリック
 #### 動作環境
 - Minecraft Java Edition 1.21.8
 - Paper または Spigot サーバー
-- Java 17 以上
+- Java 21 以上
 
 ### ドキュメント
 
@@ -146,7 +146,7 @@ da484db Add comprehensive testing and usage guide in Japanese
 
 - ✅ IntelliJ IDEA 2025.3.1
 - ✅ Gradle 8.5
-- ✅ Java 17
+- ✅ Java 21
 - ✅ Minecraft 1.21.8
 - ✅ Paper API 1.21.8-R0.1-SNAPSHOT
 - ✅ Spigot API 1.21.8-R0.1-SNAPSHOT

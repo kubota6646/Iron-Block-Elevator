@@ -67,7 +67,7 @@ Iron-Block-Elevator/
 
 ## ビルド要件
 
-- **Java**: 17以上
+- **Java**: 21以上
 - **Gradle**: 8.5（Wrapper により自動取得）
 - **IntelliJ IDEA**: 2025.3.1 推奨
 - **Minecraft API**: Paper/Spigot API 1.21.8-R0.1-SNAPSHOT
